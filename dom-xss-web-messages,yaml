@@ -1,0 +1,30 @@
+id: dom-xss-web-messages
+
+info:
+  name: "DOM XSS via Web Messages and JavaScript URL"
+  author: "exnomous"
+  severity: high
+  description: |
+    This template detects DOM-based XSS vulnerabilities via web messages and JavaScript URL.
+    The vulnerability occurs when the website listens for messages using `window.addEventListener('message', …)`
+    but does not properly validate the origin, allowing an attacker to send malicious payloads.
+  reference:
+    - https://portswigger.net/web-security/dom-based/controlling-the-web-message-source/lab-dom-xss-using-web-messages-and-a-javascript-url
+  tags: dom,xss,javascript,security
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "window\\.addEventListener\\(['\"]message['\"],\\s*function\\(e\\)\\s*{"
+          - "location\\.href\\s*=\\s*e\\.data"
+
+      - type: regex
+        part: body
+        regex:
+          - "if\\s*\\(e\\.data\\.indexOf\\(['\"]http:.*?['\"]\\)\\s*>\\s*-1"
