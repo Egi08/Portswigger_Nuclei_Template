@@ -1,4 +1,4 @@
-id: dom-xss-web-messages
+id: dom-xss-using-web-messages-and-a-javascript-url
 
 info:
   name: "DOM XSS via Web Messages and JavaScript URL"
