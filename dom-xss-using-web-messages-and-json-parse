@@ -1,0 +1,25 @@
+id: dom-xss-using-web-messages-and-json-parse
+
+info:
+  name: "DOM XSS via Web Messages and JSON.parse"
+  author: "exnomous"
+  severity: high
+  description: |
+    This template detects DOM-based XSS vulnerabilities that use web messages 
+    and JSON.parse without proper origin validation.
+  reference:
+    - https://portswigger.net/web-security/dom-based/controlling-the-web-message-source/lab-dom-xss-using-web-messages-and-json-parse
+  tags: dom,xss,javascript,json,security
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - "window\\.addEventListener\\(['\"]message['\"],\\s*function\\(e\\)\\s*{"
+          - "JSON\\.parse\\(e\\.data\\)"
+          - "case ['\"]load-channel['\"]:\\s*ACMEplayer\\.element\\.src\\s*=\\s*d\\.url"
